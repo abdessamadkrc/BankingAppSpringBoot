@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.util.List;
 
 @Service
 public class TransactionService {
@@ -68,5 +69,13 @@ public class TransactionService {
             .dateTransaction(Instant.now())
             .build();
         transactionRepository.save(t);
+    }
+
+    public List<Transaction> getAllTransactions() {
+        return transactionRepository.findAll();
+    }
+
+    public List<Transaction> getTransactionsByAccount(Long accountId) {
+        return transactionRepository.findBySourceIdOrDestinationId(accountId, accountId);
     }
 }
